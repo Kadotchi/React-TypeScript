@@ -7,7 +7,13 @@ import { UserProfile } from "./Types/userProfile";
 
 export default function App() {
   const [userProfiles, setUserProfiles] = useState<Array<UserProfile>>([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(false);
+
   const onClickFetchUser = () => {
+    setLoading(true);
+    setError(false);
+
     axios
       .get<Array<User>>("https://jsonplaceholder.typicode.com/users")
       .then((res) => {
@@ -18,6 +24,12 @@ export default function App() {
           address: `${user.address.city}${user.address.suite}${user.address.street}`
         }));
         setUserProfiles(data);
+      })
+      .catch(() => {
+        setError(true);
+      })
+      .finally(() => {
+        setLoading(false);
       });
   };
   return (
