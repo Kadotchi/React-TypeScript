@@ -35,9 +35,18 @@ export default function App() {
   return (
     <div className="App">
       <button onClick={onClickFetchUser}>データ取得</button>
-      {userProfiles.map((user) => (
-        <UserCard key={user.id} user={user} />
-      ))}
+      <br />
+      {error ? (
+        <p style={{ color: "red" }}>データの取得に失敗しました。</p>
+      ) : loading ? (
+        <p>Loading...</p>
+      ) : (
+        <>
+          {userProfiles.map((user) => (
+            <UserCard key={user.id} user={user} />
+          ))}
+        </>
+      )}
     </div>
   );
 }
